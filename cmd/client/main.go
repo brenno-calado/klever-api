@@ -15,17 +15,18 @@ func main() {
 
 	}
 
-	client := pb.NewSendMessageClient(conn)
+	client := pb.NewExchangeServiceClient(conn)
 
-	req := &pb.Request{
-		Message: "Hello grpc",
+	req := &pb.ExchangeRequest{
+		CoinName: "Klever",
+		Value: 3500.00,
 	}
 
-	res, request_err := client.RequestMessage(context.Background(), req)
+	res, request_err := client.Exchange(context.Background(), req)
 
 	if request_err != nil {
 		log.Fatal(request_err)
 	}
 
-	log.Print(res.GetStatus())
+	log.Print(res.GetBalance())
 }

@@ -10,24 +10,24 @@ import (
 )
 
 type Server struct {
-	pb.UnimplementedSendMessageServer
+	pb.UnimplementedExchangeServiceServer
 }
 
-func (service *Server) RequestMessage(ctx context.Context, req *pb.Request) (*pb.Response, error) {
-	log.Print("received message: ", req.GetMessage())
+func (service *Server) Exchange(ctx context.Context, req *pb.ExchangeRequest) (*pb.ExchangeResponse, error) {
+	log.Println("Requested value: ", req.GetValue())
+	log.Println("Requested Coin: ", req.GetCoinName())
 
-	response := &pb.Response{
-		Status: 1,
+	response := &pb.ExchangeResponse{
+		Balance: 4500,
 	}
 
 	return response, nil
 }
-func (service *Server) mustEmbedUnimplementedSendMessageServer() {}
 
 func main() {
 	grpcServer := grpc.NewServer()
 
-	pb.RegisterSendMessageServer(grpcServer, &Server{})
+	pb.RegisterExchangeServiceServer (grpcServer, &Server{})
 
 	Listener, err := net.Listen("tcp", ":9000")
 
