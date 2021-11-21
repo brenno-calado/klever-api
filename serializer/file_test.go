@@ -20,7 +20,7 @@ func TestFileSerializer(t *testing.T) {
 	require.NoError(t, err)
 
 	exchange2 := &pb.ExchangeRequest{}
-	err = serializer.WriteBinToProtoFile(binaryFilename, exchange2)
+	err = serializer.WriteBinToProto(binaryFilename, exchange2)
 	require.NoError(t, err)
 	require.True(t, proto.Equal(exchange1, exchange2))
 }

@@ -23,7 +23,7 @@ func WriteProtoToBinFile(message proto.Message, filename string) error {
 	return nil
 }
 
-func WriteBinToProtoFile(filename string, message proto.Message) error {
+func WriteBinToProto(filename string, message proto.Message) error {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return fmt.Errorf("cannot read binary file: %w", err)
