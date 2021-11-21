@@ -19,8 +19,8 @@ func randomStringFromSet(a ...string) string {
 	return a[rand.Intn(n)]
 }
 
-func randomFloat32() float32 {
-	return rand.Float32()
+func randomFloat32(min, max float32) float32 {
+	return min + rand.Float32()*(max - min)
 }
 
 func randomCoinName() string {

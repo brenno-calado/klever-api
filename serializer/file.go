@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/golang/protobuf/jsonpb"
+	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/runtime/protoiface"
 )
 
 func WriteProtoToBinFile(message proto.Message, filename string) error {
@@ -39,15 +38,17 @@ func WriteBinToProto(filename string, message proto.Message) error {
 	return nil
 }
 
-func WriteProtoToJSONFile(message protoiface.MessageV1, filename string) error {
-	marshaler := jsonpb.Marshaler{
-		EnumsAsInts: false,
-		EmitDefaults: true,
+func WriteProtoToJSONFile(message proto.Message, filename string) error {
+	marshaler := protojson.MarshalOptions{
+		Multiline: true,
 		Indent: "  ",
-		OrigName: false,
+		AllowPartial: false,
+		UseProtoNames: false,
+		UseEnumNumbers: false,
+		EmitUnpopulated: true,
 	}
 
-	data, err := marshaler.MarshalToString(message)
+	data, err := marshaler.Marshal(message)
 	if err != nil {
 		return fmt.Errorf("cannot marshal proto message to JSON data: %w", err)
 	}

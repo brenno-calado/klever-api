@@ -5,7 +5,7 @@ import "klever-api/pb"
 func NewExchange() *pb.ExchangeRequest {
 	exchange := &pb.ExchangeRequest{
 		CoinName: randomCoinName(),
-		Value: randomFloat32(),
+		Value: randomFloat32(0.000001, 1000000),
 	}
 
 	return exchange
